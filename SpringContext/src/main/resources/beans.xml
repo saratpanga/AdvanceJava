@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd">
+
+<context:property-placeholder location="classpath:application.properties"/>
+
+    <!-- Setter Injection -->
+    <bean id="st" class="com.spring.Student">
+        <property name="studentId" value="1"/>
+        <property name="name" value="sarat"/>
+        <property name="marks" value="99"/>
+    </bean>
+
+    <!-- Constructor Injection using index -->
+    <bean id="st2" class="com.spring.Student">
+        <constructor-arg index="2" value="99"/>
+        <constructor-arg index="1" value="RAM"/>
+        <constructor-arg index="0" value="98"/>
+    </bean>
+
+    <!-- Constructor + Setter Injection -->
+    <bean id="st3" class="com.spring.Student">
+        <constructor-arg value="95"/>
+        <constructor-arg value="Raj"/>
+        <property name="marks" value="99"/>
+    </bean>
+
+    <!-- Employee Bean using list -->
+    <bean id="emp" class="com.spring.Employee">
+        <property name="empId" value="577"/>
+        <property name="name" value="Sri"/>
+        <property name="salary" value="5000"/>
+        <property name="skills">
+        <set>
+        <value>java</value>
+        <value>SQL</value>
+        <value>Hibernate</value>
+        <value>java</value>
+        <value>spring</value>
+        <value>spring</value>
+        </set>
+        </property>
+        
+        <property name="education">
+        <map>
+        <entry key="ssc" value="90"></entry>
+        <entry key="Inter" value="97"></entry>
+        <entry key="B.Tech" value="65"></entry>
+        </map>
+        </property>    
+    </bean>
+    
+    <!-- Dependecy Injection -->
+    
+     <!-- DI ref spring handele these by Autowiring
+      byType - look for type of the been and it will inject, if inject two it will give exception, 
+      byName - it will check with variable name
+      constructor - it will not work with property tag it has only constructor arg tag because if use property tag been are already  create empty obj injected
+      It will not inject automatically by default we need to give explicty by useing ref tag to inject depend beans
+      Epmloyee emp= new Employee();
+      
+      Epmloyee emp2= new Employee(address, dept);  it will create new obj
+      -->
+    
+    <!-- setter injection -->
+    
+    <bean class="com.spring.User" id="user" autowire="byName">
+    <property name="userId" value="123"></property>
+    <property name="name" value="Gana"></property>
+    </bean>
+    
+    <!-- <property name="address" ref="address"></property> -->
+    
+    <bean class="com.spring.User" id="user2" autowire="constructor">
+    <constructor-arg value="123"></constructor-arg>
+    <constructor-arg value="Gana"></constructor-arg>
+    <constructor-arg ref="address"></constructor-arg>
+    <constructor-arg ref="department"></constructor-arg>
+    </bean> 
+    
+    <bean class="com.spring.Address" id="address">
+    <property name="street" value="MadhuraWada"></property>
+    <property name="pincode" value="543002"></property>
+    <property name="country" value="India"></property>
+    </bean>
+    
+    
+     <bean class="com.spring.Address" id="address2">
+    <property name="street" value="Vizag"></property>
+    <property name="pincode" value="543802"></property>
+    <property name="country" value="India"></property>
+    </bean>
+    
+    <bean class="com.spring.Department" id="department">
+    <property name="deptId" value="34"></property>
+    <property name="deptName" value="CSE"></property>
+    </bean>
+    
+   <!--  placeholder  we need tell the spring where placeholder file is there otherwise it will take int as string-->
+    <bean class="com.spring.Product" id="product">
+    <property name="productId" value="${productId}"></property>
+    <property name="productName" value="${name}"></property>
+    <property name="price" value="${price}"></property>
+    </bean>
+    
+
+</beans>

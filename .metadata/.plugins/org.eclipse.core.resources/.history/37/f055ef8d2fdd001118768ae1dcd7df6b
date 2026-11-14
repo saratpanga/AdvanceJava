@@ -1,0 +1,15 @@
+package com.flm.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.flm.model.Product;
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+	
+	
+	@Query("Select p from Product p where p.productId=:id")
+	public Product getProductById(int id);
+	
+
+}

@@ -1,0 +1,46 @@
+package com.flm.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.flm.dao.ProductRepository;
+import com.flm.model.Product;
+
+@Component
+public class ProductService {
+	
+	@Autowired
+	ProductRepository productRepository;
+	
+	public void saveProduct() {
+		Product product=new Product("AC",29999);
+		productRepository.save(product);
+	}
+	
+	public Product getProductById() {
+		Optional<Product> productOptional = productRepository.findById(1);
+		Product product = productOptional.get();
+		return product;
+	}
+
+	public List<Product> getAllProducts(){
+		return productRepository.findAll();
+	}
+	
+	public void deleteProduct() {
+		Product product=new Product(1,null,0);
+		productRepository.delete(product);
+	}
+	
+	public Product updateProduct() {
+		Product product = productRepository.findById(1).get();
+		
+		product.setPrice(899899);
+		
+		productRepository.save(product);
+		
+	}
+}
